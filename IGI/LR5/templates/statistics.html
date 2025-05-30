@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoService - Statistics</title>
+</head>
+<body>
+    <p><a href="/">Home</a></p>
+    <h1>Statistics</h1>
+
+    <h2>Clients (Alphabetical Order)</h2>
+    {% for client in clients %}
+        <p>{{ client.user.username }} - Age: {{ client.age }}</p>
+    {% endfor %}
+
+    <h2>Services (Alphabetical Order)</h2>
+    {% for service in services %}
+        <p>{{ service.name }} - Price: ${{ service.price }}</p>
+    {% endfor %}
+
+    <h2>Sales Statistics</h2>
+    <p>Total Sales: ${{ total_sales }}</p>
+    <p>Average Sale: ${{ sales_avg }}</p>
+    <p>Median Sale: ${{ sales_median }}</p>
+    <p>Mode Sale: ${{ sales_mode }}</p>
+
+    <h2>Client Age Statistics</h2>
+    <p>Average Age: {{ age_avg }}</p>
+    <p>Median Age: {{ age_median }}</p>
+
+    <h2>Service Type Popularity</h2>
+    <p>Most Popular: {{ popular_service_type.name }} ({{ popular_service_type.total_orders }} orders)</p>
+
+    <h2>Service Type Profitability</h2>
+    <p>Most Profitable: {{ profitable_service_type.name }} ({{ profitable_service_type.total_profit }} profit)</p>
+
+    <h2>Monthly Sales Chart</h2>
+    <img src="../media/orders_by_service_type.png" alt="Monthly Sales Chart">
+</body>
+</html>

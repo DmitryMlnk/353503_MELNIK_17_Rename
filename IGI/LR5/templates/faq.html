@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoService - FAQ</title>
+</head>
+<body>
+    <p><a href="/">Home</a></p>
+    <h1>Frequently Asked Questions</h1>
+    {% for faq in faqs %}
+        <div>
+            <h2>{{ faq.question }}</h2>
+            <p>{{ faq.answer }}</p>
+            <p>Answered on: {{ faq.answer_date }}</p>
+        </div>
+    {% endfor %}
+</body>
+</html>

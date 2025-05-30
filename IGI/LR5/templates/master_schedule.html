@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoService - Master Schedule</title>
+</head>
+<body>
+    <p><a href="/">Home</a></p>
+    <h1>Master Schedule</h1>
+    <form method="get">
+        <p>
+            <label for="search">Search:</label>
+            <input type="text" id="search" name="search">
+        </p>
+        <p>
+            <label for="sort">Sort By:</label>
+            <select id="sort" name="sort">
+                <option value="scheduled_at">Scheduled At</option>
+                <option value="-scheduled_at">Scheduled At (Descending)</option>
+            </select>
+        </p>
+        <button type="submit">Search</button>
+    </form>
+    {% for order in orders %}
+        <div>
+            <p>Order ID: {{ order.id }}</p>
+            <p>Client: {{ order.user.username }}</p>
+            <p>Address: {{ order.address }}</p>
+            <p>Car Type: {{ order.car_type.name }}</p>
+            <p>Scheduled At: {{ order.scheduled_at|date:"d/m/Y H:i" }}</p>
+            <p>Total Price: ${{ order.total_price }}</p>
+            <p>Order Items:</p>
+            <ul>
+                {% for item in order.orderitem_set.all %}
+                    <li>
+                        {% if item.service %}
+                            {{ item.service.name }} - Quantity: {{ item.quantity }}
+                        {% elif item.spare_part %}
+                            {{ item.spare_part.name }} - Quantity: {{ item.quantity }}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% empty %}
+        <p>No scheduled orders.</p>
+    {% endfor %}
+</body>
+</html>

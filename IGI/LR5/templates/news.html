@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Автосервис - Новости</title>
+</head>
+<body>
+    <h1>Новости Автосервиса</h1>
+    <p>Текущая дата: {{ current_date|date:"d/m/Y" }}</p>
+    <p>Временная зона: {{ user_timezone }}</p>
+    <p>Время UTC: {{ utc_time|date:"d/m/Y H:i" }}</p>
+    <h2>Календарь</h2>
+    <pre>{{ calendar_text }}</pre>
+
+    <h2>Список новостей</h2>
+    {% if news_list %}
+        <ul>
+        {% for news in news_list %}
+            <li>
+                <h3>{{ news.title }}</h3>
+                <p>Опубликовано: {{ news.pub_date|date:"d/m/Y H:i" }} | Автор: {{ news.author.username|default:"Неизвестен" }}</p>
+                <p>{{ news.summary }}</p>
+                <a href="/news/{{ news.id }}/">Читать полностью</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Новостей пока нет.</p>
+    {% endif %}
+
+    <h2>Навигация</h2>
+    <ul>
+        <li><a href="/">Главная</a></li>
+        <li><a href="/about/">О нас</a></li>
+        <li><a href="/contacts/">Контакты</a></li>
+        <li><a href="/coupons/">Купоны</a></li>
+        <li><a href="/faq/">Часто задаваемые вопросы</a></li>
+        <li><a href="/policy/">Политика</a></li>
+        <li><a href="/services/">Услуги</a></li>
+        <li><a href="/spare_parts/">Запчасти</a></li>
+        <li><a href="/review_list/">Отзывы</a></li>
+        <li><a href="/news/">Новости</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="/view_orders/">Мои заказы</a></li>
+            <li><a href="/settings/">Настройки</a></li>
+            {% if user.client.role == 'master' or user.client.role == 'admin' %}
+                <li><a href="/master_schedule/">Расписание мастера</a></li>
+            {% endif %}
+            {% if user.is_superuser %}
+                <li><a href="/admin_dashboard/">Панель администратора</a></li>
+                <li><a href="/statistics/">Статистика</a></li>
+            {% endif %}
+            <li><a href="/logout/">Выйти</a></li>
+        {% else %}
+            <li><a href="/login/">Войти</a></li>
+            <li><a href="/register/">Зарегистрироваться</a></li>
+        {% endif %}
+    </ul>
+</body>
+</html>

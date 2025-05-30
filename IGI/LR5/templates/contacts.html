@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoService - Contacts</title>
+</head>
+<body>
+    <p><a href="/">Home</a></p>
+    <h1>Contact Us</h1>
+    <p>Feel free to contact us using the information below:</p>
+    {% for contact in contacts %}
+        <div>
+            <h2>{{ contact.title }}</h2>
+            <p>{{ contact.description }}</p>
+            <p>Email: {{ contact.email }}</p>
+            <p>Phone: {{ contact.phone_number }}</p>
+            <img src="{{ contact.image.url }}" alt="{{ contact.title }}" width="500">
+        </div>
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Автосервис - Вход</title>
+</head>
+<body>
+    <p><a href="/">Home</a></p>
+    <h1>Вход</h1>
+    <p>Текущая дата: {{ current_date|date:"d/m/Y" }}</p>
+    <p>Временная зона: {{ user_timezone }}</p>
+    <p>Время UTC: {{ utc_time|date:"d/m/Y H:i" }}</p>
+    <h2>Календарь</h2>
+    <pre>{{ calendar_text }}</pre>
+
+    {% for message in messages %}
+        <p style="color: red;">{{ message }}</p>
+    {% endfor %}
+
+    <form method="post" action="/login/">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        <p>
+            <label for="username">Имя пользователя:</label>
+            <input type="text" id="username" name="username" required minlength="3">
+        </p>
+        <p>
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required minlength="6">
+        </p>
+        <button type="submit">Войти</button>
+    </form>
+    <p><a href="/register/">Нет аккаунта? Зарегистрироваться</a></p>
+</body>
+</html>

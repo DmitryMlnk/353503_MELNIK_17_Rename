@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoService - Create Review</title>
+</head>
+<body>
+    <p><a href="/">Home</a></p>
+    <h1>Create Review</h1>
+    <form method="post">
+        {% csrf_token %}
+        <p>{{ form.as_p }}</p>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

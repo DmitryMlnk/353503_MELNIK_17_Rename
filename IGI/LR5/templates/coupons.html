@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoService - Coupons</title>
+</head>
+<body>
+    <p><a href="/">Home</a></p>
+    <h1>Coupons</h1>
+    <p>Here you can find our latest coupons and discounts.</p>
+    {% for coupon in coupons %}
+        <div>
+            <h2>{{ coupon.title }}</h2>
+            <p>{{ coupon.description }}</p>
+            <p>Coupon Number: {{ coupon.number }}</p>
+            <p>Status: {% if coupon.active %}Active{% else %}Inactive{% endif %}</p>
+        </div>
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoService - Admin Dashboard</title>
+</head>
+<body>
+    <p><a href="/">Home</a></p>
+    <h1>Admin Dashboard</h1>
+    <h2>Total Revenue: ${{ total_revenue }}</h2>
+    <form method="get">
+        <p>
+            <label for="search">Search:</label>
+            <input type="text" id="search" name="search">
+        </p>
+        <p>
+            <label for="sort">Sort By:</label>
+            <select id="sort" name="sort">
+                <option value="user__username">Client Name</option>
+                <option value="name">Service/Part Name</option>
+                <option value="price">Price</option>
+                <option value="-price">Price (Descending)</option>
+            </select>
+        </p>
+        <button type="submit">Search</button>
+    </form>
+    <h2>Orders</h2>
+    {% for order in orders %}
+        <div>
+            <p>Order ID: {{ order.id }}</p>
+            <p>Client: {{ order.user.username }}</p>
+            <p>Address: {{ order.address }}</p>
+            <p>Car Type: {{ order.car_type.name }}</p>
+            <p>Master: {{ order.master.user.username }}</p>
+            <p>Total Price: ${{ order.total_price }}</p>
+            <p>Created At: {{ order.created_at|date:"d/m/Y" }} (UTC: {{ order.created_at|date:"d/m/Y H:i" }})</p>
+            <p>Order Items:</p>
+            <ul>
+                {% for item in order.orderitem_set.all %}
+                    <li>
+                        {% if item.service %}
+                            {{ item.service.name }} - Quantity: {{ item.quantity }}
+                        {% elif item.spare_part %}
+                            {{ item.spare_part.name }} - Quantity: {{ item.quantity }}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+    <h2>Clients</h2>
+    {% for client in clients %}
+        <div>
+            <p>Username: {{ client.user.username }}</p>
+            <p>Role: {{ client.role }}</p>
+            <p>Phone: {{ client.phone_number }}</p>
+            <p>Address: {{ client.address }}</p>
+        </div>
+    {% endfor %}
+    <h2>Services</h2>
+    {% for service in services %}
+        <div>
+            <p>Name: {{ service.name }}</p>
+            <p>Type: {{ service.service_type.name }}</p>
+            <p>Price: ${{ service.price }}</p>
+            <p>Created: {{ service.created_at|date:"d/m/Y" }} (UTC: {{ service.created_at|date:"d/m/Y H:i" }})</p>
+        </div>
+    {% endfor %}
+    <h2>Spare Parts</h2>
+    {% for part in spare_parts %}
+        <div>
+            <p>Name: {{ part.name }}</p>
+            <p>Type: {{ part.spare_part_type.name }}</p>
+            <p>Price: ${{ part.price }}</p>
+            <p>Created: {{ part.created_at|date:"d/m/Y" }} (UTC: {{ part.created_at|date:"d/m/Y H:i" }})</p>
+        </div>
+    {% endfor %}
+</body>
+</html>

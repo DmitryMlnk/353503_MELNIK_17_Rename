@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoService - Spare Parts</title>
+</head>
+<body>
+    <p><a href="/">Home</a></p>
+    <h1>Spare Parts</h1>
+    <form method="get">
+        <p>
+            <label for="search">Search:</label>
+            <input type="text" id="search" name="search">
+        </p>
+        <p>
+            <label for="min_price">Min Price:</label>
+            <input type="number" id="min_price" name="min_price">
+        </p>
+        <p>
+            <label for="max_price">Max Price:</label>
+            <input type="number" id="max_price" name="max_price">
+        </p>
+        <p>
+            <label for="spare_part_type">Spare Part Type:</label>
+            <select id="spare_part_type" name="spare_part_type">
+                <option value="">All</option>
+                {% for type in spare_part_types %}
+                    <option value="{{ type.name }}">{{ type.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <label for="sort">Sort By:</label>
+            <select id="sort" name="sort">
+                <option value="name">Name</option>
+                <option value="price">Price</option>
+                <option value="-price">Price (Descending)</option>
+            </select>
+        </p>
+        <button type="submit">Filter</button>
+    </form>
+    {% for part in spare_parts %}
+        <div>
+            <h2>{{ part.name }}</h2>
+            <p>{{ part.description }}</p>
+            <p>Price: ${{ part.price }}</p>
+            <p>Type: {{ part.spare_part_type.name }}</p>
+            <p>Created: {{ part.created_at|date:"d/m/Y" }} (UTC: {{ part.created_at|date:"d/m/Y H:i" }})</p>
+            {% if user.is_authenticated %}
+                <form method="get" action="/add_to_order/spare_part/{{ part.id }}/">
+                    {% csrf_token %}
+                    <button type="submit">Add to Order</button>
+                </form>
+            {% endif %}
+        </div>
+    {% endfor %}
+</body>
+</html>

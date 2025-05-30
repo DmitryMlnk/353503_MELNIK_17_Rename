@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoService - Register</title>
+    <script>
+        function validateForm() {
+            const phone = document.getElementById('phone_number').value;
+            const phonePattern = /^\+375\((?:25|29|33|44)\)\d{3}-\d{2}-\d{2}$/;
+            if (!phonePattern.test(phone)) {
+                alert('Phone number must be in format +375(29)XXX-XX-XX');
+                return false;
+            }
+            const birthDate = new Date(document.getElementById('birth_date').value);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            if (age < 18) {
+                alert('You must be at least 18 years old');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <p><a href="/">Home</a></p>
+    <h1>Register</h1>
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+    <form method="post" onsubmit="return validateForm()">
+        {% csrf_token %}
+        <p>{{ form.as_p }}</p>
+        <button type="submit">Register</button>
+    </form>
+    <p><a href="/login/">Already have an account? Login</a></p>
+</body>
+</html>

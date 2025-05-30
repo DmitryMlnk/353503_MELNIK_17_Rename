@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoService - Reviews</title>
+</head>
+<body>
+    <p><a href="/">Home</a></p>
+    <h1>Customer Reviews</h1>
+    <p>Read what our customers say about our services.</p>
+    {% for review in reviews %}
+        <div id="review-{{ review.id }}">
+            <p>{{ review.text }} - {{ review.rating }}/10 by {{ review.user.username }} on {{ review.created_at }}</p>
+            {% if user.is_authenticated %}
+            <a href="/review_list/edit_review/{{ review.id }}/">Редактировать</a>
+            <a href="/review_list/delete_review/{{ review.id }}/">Удалить</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <p><a href="/review_list/create_review/">Create a Review</a></p>
+</body>
+</html>
